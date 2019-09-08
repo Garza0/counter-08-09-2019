@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <style>
+         .grid-container {
+             place-items: center center;
+  display: grid;
+  height:400px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "p1 p1 p2 p2 "
+    "c1 r1 r2 c2 " 
+    ;
+}
+.player1 {
+   grid-area: p1; 
+}
+.player2 {
+   grid-area: p2; 
+}
+.choser1 {
+   grid-area: c1; 
+}
+.choser2 {
+   grid-area: c2; 
+}
+.ready1 {
+   grid-area: r1; 
+}
+.ready1 {
+   grid-area: r2; 
+}
+
+button {
+    display: block;
+    width:200px;
+
+}
+    
+    </style>
+</head>
+<body>
+   
+    <div class="grid-container">
+        <div class='player1'><input id='i1'><h2 id='p1'>{player1}</h2></div>
+        <div class='player2'><input id='i2'><h2 id='p2'>{player2}</h2></div>
+        <div class='choser1'>
+            <button disabled>Камень</button>
+            <button disabled>Ножницы</button>
+            <button disabled>Бумага</button>
+        </div>
+        <div class='choser2'>
+            <button disabled>Камінь</button>
+            <button disabled>Ножиці</button>
+            <button disabled>Папір</button>
+        </div>
+        <div class='ready1' id='r1'></div>
+        <div class='ready2' id='r2'></div>
+    </div>
+
+    <script>
+        function enablePlayer(n) {
+            document.querySelectorAll('.choser' + n + ' button').forEach(btn => btn.disabled = null) 
+            i1.style.display = i2.style.display = 'none'
+            window['p' + n].innerText = localStorage['player' + n] 
+        }
+
+        if (localStorage.player1 && localStorage.player1 == p1.innerText) {
+            enablePlayer(1)
+        }
+
+        if (localStorage.player2 && localStorage.player2 == p2.innerText) {
+            enablePlayer(2)
+        }
+
+        i1.onkeydown = e => {
+            if (e.key == 'Enter') {
+                enablePlayer(1)
+                p1.innerText = localStorage.player1 = i1.value
+                fetch(location.href + 'setp1_' + i1.value)
+            }
+        }
+
+        i2.onkeydown = e => {
+            if (e.key == 'Enter') {
+                enablePlayer(2)
+                p2.innerText = localStorage.player2 = i2.value
+                fetch(location.href + 'setp2_' + i2.value)
+            }
+        }
+     </script>
+
+</body>
+</html>
